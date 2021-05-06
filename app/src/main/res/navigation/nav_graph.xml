@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    android:label="Price Checker"
+    app:startDestination="@id/basketFragment">
+
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="com.liviolopez.pricechecker.ui.basket.BasketFragment"
+        tools:layout="@layout/fragment_basket">
+
+        <action
+            android:id="@+id/action_basketFragment_to_groceryFragment"
+            app:destination="@id/groceryFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_basketFragment_to_scannerFragment"
+            app:destination="@id/scannerFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/groceryFragment"
+        android:name="com.liviolopez.pricechecker.ui.grocery.GroceryFragment"
+        tools:layout="@layout/fragment_grocery" />
+
+    <fragment
+        android:id="@+id/scannerFragment"
+        android:name="com.liviolopez.pricechecker.ui.camera.ScannerFragment"
+        android:label="Scan qrCode">
+    </fragment>
+</navigation>

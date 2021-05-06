@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/grocery_menu">
+
+        <item android:id="@+id/all_items"
+            android:title="@string/all_items"
+            android:icon="@drawable/ic_store"
+            app:showAsAction="always"/>
+
+        <item android:id="@+id/clean_card"
+            android:title="@string/clean_basket"
+            android:icon="@drawable/ic_clean_cart"
+            app:showAsAction="always"/>
+    </group>
+</menu>

@@ -1,0 +1,76 @@
+@startuml
+
+!define Entity(name,desc) entity name as "desc" << (E,#22cc00) >> #line:black;
+!define DataView(name,desc) class name as "desc" << (D,#ffd800) >> #line:black;
+!define TransferClass(name,desc) class name as "desc" << (T,#84b1ff) >> #aliceblue;line:blue;line.dotted;
+
+!define primary_key(x) <&key><b>x</b>
+!define unique(x) <color:green>x</color>
+!define not_null(x) <u>x</u>
+
+!define embedded(x) <i><b>x</b></i>
+!define relation(x) <color:gray>x</color>
+
+' entities
+package Room-DB as "Room DB" {
+    database DB as "DB" {
+    }
+
+    Entity(Item, "Item") {
+        primary_key(id): String
+        not_null(name): String
+        not_null(price): Float
+        not_null(thumbnail): String
+    }
+    hide Item methods
+
+    TransferClass(ItemBasket, "ItemBasket") {
+        # inBasket: Boolean? = false
+        --
+        + embedded(item)
+    }
+    Item -[#blue]-# ItemBasket::item
+
+    '------------------------------
+
+    Entity(Basket, "Basket") {
+        primary_key(id) : Int
+        not_null(unique(itemId)) String
+        not_null(quantity): Int
+        not_null(createdAt): Long
+    }
+    hide Basket methods
+
+    TransferClass(BasketItem, "BasketItem") {
+        --
+        + embedded(basket)
+        + relation(embedded(item))
+    }
+    Basket -[#blue]-# BasketItem::basket
+
+    '------------------------------
+
+    Item::id -[#green]> "1" Basket::item
+    Item .[#green].# BasketItem::item
+}
+
+newpage
+
+scale 0.8
+
+'############# legend ###############
+skinparam nodesep 5
+
+Entity(_entity, "<b>Entity</b>")
+hide _entity members
+
+DataView(_data_view, "DataView")
+hide _data_view members
+
+TransferClass(_transfer_class, "TransferClass")
+hide _transfer_class members
+
+_entity -[hidden] _data_view
+_data_view -[hidden] _transfer_class
+
+@enduml

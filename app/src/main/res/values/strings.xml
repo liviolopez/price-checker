@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Price Checker</string>
+
+    <string name="retry">Retry</string>
+    <string name="empty_list">No results found</string>
+    <string name="empty_list_msg">No results found for %1$s</string>
+    <string name="error_msg">An error occurred, please try again</string>
+    <string name="error_msg_param">An error occurred\n%1$s</string>
+    <string name="error_msg_updating">An error has occurred when trying to update the data</string>
+
+    <string name="total_items">Total items %1$s</string>
+    <string name="price">Price:</string>
+    <string name="total">Total:</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="remove_from_cart">Remove from cart</string>
+    <string name="clean_basket">Clean basket</string>
+    <string name="all_items">All supermarket items</string>
+    <string name="total_price_basket">Total price $%1$.2f</string>
+    <string name="basket_empty">Your shopping cart is empty</string>
+    <string name="camera_permissions">It is necessary to grant the camera permissions to scan QR codes.</string>
+    <string name="search_input_hint">Search by item code</string>
+
+
+    <!-- Input/Form error messages -->
+    <string name="validation_code_only_numbers">Item code must be numbers only</string>
+    <string name="validation_code_max_characters">Item code must be a maximum of 4 numbers</string>
+</resources>
