@@ -36,22 +36,20 @@ class BasketViewModel @Inject constructor (
     private val _searchQuery = savedStateHandle.getLiveData<String?>("key_search_query")
     val searchQuery = MutableStateFlow(_searchQuery.value)
 
-    private val searchScope = CoroutineScope(Dispatchers.IO)
     private suspend fun searchItemCode(){
         searchQuery
             .onEach { _searchQuery.value = it }
             .filterNotNull()
             .collectLatest { query ->
                 _itemsSearched.value = Resource.loading()
+
                 repository.searchItemCode(query)
                     .catch { e -> _itemsSearched.value = Resource.error(e, emptyList()) }
-                    .onEach { _itemsSearched.value = Resource.success(it) }
-                    .launchIn(searchScope)
+                    .collect { _itemsSearched.value = Resource.success(it) }
             }
     }
 
     private fun cleanSearch(){
-        searchScope.coroutineContext.cancelChildren()
         searchQuery.value = null
         _itemsSearched.value = Resource.success(emptyList())
     }
