@@ -14,7 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.liviolopez.pricechecker.R
-import com.liviolopez.pricechecker.data.local.model.ItemBasket
+import com.liviolopez.pricechecker.data.local.model.Item
 import com.liviolopez.pricechecker.databinding.FragmentBasketBinding
 import com.liviolopez.pricechecker.ui._components.*
 import com.liviolopez.pricechecker.ui.grocery.GroceryAdapter
@@ -209,7 +209,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket), BasketAdapter.OnItemE
             }.launchIn(lifecycleScope)
     }
 
-    private fun submitListGroceryAdapter(itemsList: List<ItemBasket>) {
+    private fun submitListGroceryAdapter(itemsList: List<Item>) {
         groceryAdapter.submitList(itemsList) {
             binding.rvSearchedItems.scrollToPosition(0)
         }

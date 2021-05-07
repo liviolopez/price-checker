@@ -4,7 +4,7 @@ import androidx.room.withTransaction
 import com.liviolopez.pricechecker.data.local.AppDataBase
 import com.liviolopez.pricechecker.data.local.AppDataStore
 import com.liviolopez.pricechecker.data.local.model.Basket
-import com.liviolopez.pricechecker.data.local.model.ItemBasket
+import com.liviolopez.pricechecker.data.local.model.Item
 import com.liviolopez.pricechecker.data.remote.RemoteDataSource
 import com.liviolopez.pricechecker.data.remote.response.toLocalModel
 import com.liviolopez.pricechecker.utils.networkBoundResource
@@ -56,7 +56,7 @@ class RepositoryImpl(
         }
     )
 
-    override fun searchItemCode(query: String): Flow<List<ItemBasket>> {
+    override fun searchItemCode(query: String): Flow<List<Item>> {
         return itemDao.searchItem(query)
     }
 

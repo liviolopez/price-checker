@@ -9,7 +9,7 @@ interface ItemDao {
     fun getAllItems(): Flow<List<Item>>
 
     @Query("SELECT item.*, (CASE WHEN basket.id IS NULL THEN 0 ELSE 1 END) AS inBasket FROM item LEFT JOIN basket ON basket.itemId = item.id WHERE item.id LIKE '%' || :query || '%'")
-    fun searchItem(query: String): Flow<List<ItemBasket>>
+    fun searchItem(query: String): Flow<List<Item>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertItems(items: List<Item>)

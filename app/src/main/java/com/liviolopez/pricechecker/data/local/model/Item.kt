@@ -1,6 +1,5 @@
 package com.liviolopez.pricechecker.data.local.model
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,6 +9,6 @@ data class Item(
     val name: String,
     val price: Float,
     val thumbnail: String
-)
-
-data class ItemBasket(@Embedded val item: Item, val inBasket: Boolean? = false)
+) {
+    var inBasket: Boolean? = null
+}

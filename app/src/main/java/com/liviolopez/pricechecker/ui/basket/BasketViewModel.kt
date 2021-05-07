@@ -2,7 +2,7 @@ package com.liviolopez.pricechecker.ui.basket
 
 import androidx.lifecycle.*
 import com.liviolopez.pricechecker.data.local.model.BasketItem
-import com.liviolopez.pricechecker.data.local.model.ItemBasket
+import com.liviolopez.pricechecker.data.local.model.Item
 import com.liviolopez.pricechecker.repository.Repository
 import com.liviolopez.pricechecker.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +30,7 @@ class BasketViewModel @Inject constructor (
 
     // --------------- Search ---------------
 
-    private val _itemsSearched = MutableStateFlow<Resource<List<ItemBasket>>>(Resource.loading())
+    private val _itemsSearched = MutableStateFlow<Resource<List<Item>>>(Resource.loading())
     val itemsSearched = _itemsSearched.asStateFlow()
 
     private val _searchQuery = savedStateHandle.getLiveData<String?>("key_search_query")
