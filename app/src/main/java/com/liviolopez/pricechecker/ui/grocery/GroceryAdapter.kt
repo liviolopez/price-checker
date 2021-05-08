@@ -15,6 +15,12 @@ import com.liviolopez.pricechecker.ui._components.viewHolderFrom
 import com.liviolopez.pricechecker.utils.extensions.setImage
 import com.liviolopez.pricechecker.utils.extensions.visibleIf
 
+// This ListAdapter receives Any as a parameter to show the implementation of various ViewHolders according to the class (Item, ItemBasket).
+// Also as an example, to show the class ItemBasket with the Room's annotation @Embedded
+//
+// The Git Branch in the follow link has a modified version of this ListAdapter that receive the "Item" class instead of Any
+// https://github.com/liviolopez/price-checker/compare/recycler-item-viewtype
+
 class GroceryAdapter(
     private val onItemEventListener: OnItemEventListener? = null,
 ) : ListAdapter<Any, BindingViewHolder<*>>(ItemComparator()) {
