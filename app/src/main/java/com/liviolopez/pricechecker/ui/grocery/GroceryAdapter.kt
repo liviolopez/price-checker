@@ -22,12 +22,8 @@ import com.liviolopez.pricechecker.utils.extensions.visibleIf
 // https://github.com/liviolopez/price-checker/compare/recycler-item-viewtype
 
 class GroceryAdapter(
-    private val onItemEventListener: OnItemEventListener? = null,
+    private val clickListener: ((String, View) -> Unit)? = null
 ) : ListAdapter<Any, BindingViewHolder<*>>(ItemComparator()) {
-
-    interface OnItemEventListener {
-        fun onClickGroceryItem(itemId: String, view: View)
-    }
 
     override fun getItemViewType(position: Int): Int {
         return if (getItem(position) is ItemBasket) 1 else 0
@@ -59,12 +55,6 @@ class GroceryAdapter(
         override fun areContentsTheSame(oldItem: Any, newItem: Any) = oldItem == newItem
     }
 
-    private fun onClick(itemId: String, vararg views: View) {
-        views.forEach { view ->
-            view.setOnClickListener { onItemEventListener?.onClickGroceryItem(itemId, view) }
-        }
-    }
-
     @JvmName("bindItemOnGroceryAllBinding")
     private fun BindingViewHolder<ItemOnGroceryToBasketBinding>.bind(item: ItemBasket) {
         binding.apply {
@@ -76,7 +66,11 @@ class GroceryAdapter(
             fabAddToCart.visibleIf { item.inBasket == false }
             fabRemoveFromCart.visibleIf { item.inBasket == true }
 
-            onClick(item.item.id, fabAddToCart, fabRemoveFromCart)
+            listOf(fabAddToCart, fabRemoveFromCart).forEach { view ->
+                view.setOnClickListener {
+                    this@GroceryAdapter.clickListener?.let { it(item.item.id, view) }
+                }
+            }
         }
     }
 

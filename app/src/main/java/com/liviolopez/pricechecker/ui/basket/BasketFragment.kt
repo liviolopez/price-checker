@@ -13,26 +13,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.liviolopez.pricechecker.R
 import com.liviolopez.pricechecker.data.local.model.ItemBasket
 import com.liviolopez.pricechecker.databinding.FragmentBasketBinding
+import com.liviolopez.pricechecker.ui.MainActivity
 import com.liviolopez.pricechecker.ui._components.*
 import com.liviolopez.pricechecker.ui.grocery.GroceryAdapter
+import com.liviolopez.pricechecker.utils.InputValidator
 import com.liviolopez.pricechecker.utils.Resource
 import com.liviolopez.pricechecker.utils.extensions.setGone
 import com.liviolopez.pricechecker.utils.extensions.setVisible
 import com.liviolopez.pricechecker.utils.extensions.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.*
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import com.liviolopez.pricechecker.ui.MainActivity
-import com.liviolopez.pricechecker.utils.InputValidator
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @FlowPreview
 @AndroidEntryPoint
-class BasketFragment : Fragment(R.layout.fragment_basket), BasketAdapter.OnItemEventListener, GroceryAdapter.OnItemEventListener {
+class BasketFragment : Fragment(R.layout.fragment_basket) {
     private val TAG = "BasketFragment"
 
     private val viewModel: BasketViewModel by activityViewModels()
@@ -84,10 +84,14 @@ class BasketFragment : Fragment(R.layout.fragment_basket), BasketAdapter.OnItemE
 
         binding = FragmentBasketBinding.bind(view)
 
-        basketAdapter = BasketAdapter(this)
+        basketAdapter = BasketAdapter(
+            { basketId -> viewModel.removeItemFromBasket(basketId = basketId) },
+            { basketId, quantity -> viewModel.updateItemBasketQuantity(basketId, quantity) }
+        )
+
         binding.rvBasketItems.adapter = basketAdapter
 
-        groceryAdapter = GroceryAdapter(this)
+        groceryAdapter = GroceryAdapter { itemId: String, clickedView: View -> onClickGroceryItem(itemId, clickedView) }
         binding.rvSearchedItems.adapter = groceryAdapter
 
         setupBasketAdapter()
@@ -215,21 +219,13 @@ class BasketFragment : Fragment(R.layout.fragment_basket), BasketAdapter.OnItemE
         }
     }
 
-    override fun onClickBasketItem(basketId: Int, position: Int) {
-        viewModel.removeItemFromBasket(basketId = basketId)
-    }
-
-    override fun onQuantityChanged(basketId: Int, quantity: Int) {
-        viewModel.updateItemBasketQuantity(basketId, quantity)
-    }
-
-    override fun onClickGroceryItem(itemId: String, view: View) {
+    private fun onClickGroceryItem(itemId: String, clickedView: View) {
         binding.svSearchCode.setQuery("", true)
         scrollToTop = true
         submitListGroceryAdapter(emptyList())
         binding.rvSearchedItems.setGone()
 
-        when (view.id) {
+        when (clickedView.id) {
             R.id.fab_add_to_cart -> viewModel.addItemToBasket(itemId)
             R.id.fab_remove_from_cart -> viewModel.removeItemFromBasket(itemId = itemId)
             else -> Unit
