@@ -14,13 +14,9 @@ import kotlinx.coroutines.flow.*
 
 @FlowPreview
 class BasketAdapter(
-    private val onItemEventListener: OnItemEventListener,
+    val removeItemListener: (basketId: Int) -> Unit,
+    val quantityChanged: (basketId: Int, quantity: Int) -> Unit
 ) : ListAdapter<BasketItem, BindingViewHolder<*>>(ItemComparator()) {
-
-    interface OnItemEventListener {
-        fun onClickBasketItem(basketId: Int, position: Int)
-        fun onQuantityChanged(basketId: Int, quantity: Int)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<*> {
         return parent.viewHolderFrom(ItemOnBasketBinding::inflate)
@@ -56,13 +52,13 @@ class BasketAdapter(
                         .debounce(500)
                         .distinctUntilChanged()
                         .collectLatest {
-                            onItemEventListener.onQuantityChanged(basketItem.basket.id, it)
+                            this@BasketAdapter.quantityChanged(basketItem.basket.id, it)
                         }
                 }
             }
 
             btnRemoveFromCart.setOnClickListener {
-                onItemEventListener.onClickBasketItem(basketItem.basket.id, position)
+                this@BasketAdapter.removeItemListener(basketItem.basket.id)
             }
         }
     }

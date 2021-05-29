@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class GroceryFragment : Fragment(R.layout.fragment_grocery), GroceryAdapter.OnItemEventListener {
+class GroceryFragment : Fragment(R.layout.fragment_grocery) {
     private val TAG = "SourceFragment"
 
     private val viewModel: GroceryViewModel by activityViewModels()
@@ -71,6 +71,4 @@ class GroceryFragment : Fragment(R.layout.fragment_grocery), GroceryAdapter.OnIt
 
         }.launchIn(lifecycleScope)
     }
-
-    override fun onClickGroceryItem(itemId: String, view: View) {}
 }
