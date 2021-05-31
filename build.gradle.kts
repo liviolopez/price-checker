@@ -1,5 +1,3 @@
-ext["kotlin_version"] = "1.5.0"
-
 buildscript {
     repositories {
         google()
@@ -7,10 +5,10 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:4.2.1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.0")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.35.1")
+        classpath(Plugins.gradle)
+        classpath(Plugins.kotlin)
+        classpath(Plugins.navigation)
+        classpath(Plugins.dagger_hilt)
     }
 }
 
