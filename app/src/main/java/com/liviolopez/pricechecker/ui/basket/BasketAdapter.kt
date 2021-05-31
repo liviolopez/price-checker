@@ -24,7 +24,7 @@ class BasketAdapter(
 
     override fun onBindViewHolder(holder: BindingViewHolder<*>, position: Int) {
         val item = getItem(position)
-        holder.typed<ItemOnBasketBinding>().bind(item, position)
+        holder.typed<ItemOnBasketBinding>().bind(item)
     }
 
     class ItemComparator : DiffUtil.ItemCallback<BasketItem>() {
@@ -33,7 +33,7 @@ class BasketAdapter(
         override fun areContentsTheSame(oldItem: BasketItem, newItem: BasketItem) = oldItem == newItem
     }
 
-    private fun BindingViewHolder<ItemOnBasketBinding>.bind(basketItem: BasketItem, position: Int) {
+    private fun BindingViewHolder<ItemOnBasketBinding>.bind(basketItem: BasketItem) {
         binding.apply {
             ivThumbnail.setImage(basketItem.item.thumbnail)
             tvName.text = basketItem.item.name
